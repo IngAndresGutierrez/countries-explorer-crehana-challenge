@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { CountryDetail, UseCountryDetailReturn } from '../types'
 import { CountryDetailService } from '../services/country-detail.service'
 
@@ -11,7 +11,7 @@ export const useCountryDetail = (
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  const fetchCountryDetail = async (): Promise<void> => {
+  const fetchCountryDetail = useCallback(async (): Promise<void> => {
     try {
       setLoading(true)
       setError(null)
@@ -24,13 +24,13 @@ export const useCountryDetail = (
     } finally {
       setLoading(false)
     }
-  }
+  }, [countryCode])
 
   useEffect(() => {
     if (countryCode) {
       fetchCountryDetail()
     }
-  }, [countryCode])
+  }, [countryCode, fetchCountryDetail])
 
   return {
     country,

@@ -3,7 +3,8 @@ import { CountryDetailPage } from '@/features/country-detail'
 export default async function CountryPage({
   params,
 }: {
-  params: { code: string }
+  params: Promise<{ code: string }>
 }) {
-  return <CountryDetailPage countryCode={params.code} />
+  const { code } = await params
+  return <CountryDetailPage countryCode={code} />
 }
