@@ -5,7 +5,6 @@ import CountryHeader from '../CountryHeader'
 import CountryDetailsGrid from '../CountryDetailsGrid'
 import CountryDetailLoadingState from '../CountryDetailLoadingState'
 import CountryDetailErrorState from '../CountryDetailErrorState'
-import CountryNotFound from '../CountryNotFound'
 
 interface CountryDetailPageProps {
   countryCode: string
@@ -25,7 +24,12 @@ export const CountryDetailPage: React.FC<CountryDetailPageProps> = ({
   }
 
   if (!country) {
-    return <CountryNotFound />
+    return (
+      <CountryDetailErrorState
+        error="Country data not available"
+        onRetry={refetch}
+      />
+    )
   }
 
   return (

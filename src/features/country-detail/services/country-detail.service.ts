@@ -45,6 +45,16 @@ export class CountryDetailService {
       throw error instanceof Error ? error : new Error('Unknown error occurred')
     }
   }
+
+  static async checkCountryExists(code: string): Promise<boolean> {
+    try {
+      const country = await this.fetchCountryDetail(code)
+      return country !== null
+    } catch (error) {
+      console.error('Error checking country existence:', error)
+      return false
+    }
+  }
 }
 
 export const countryDetailService = new CountryDetailService()
